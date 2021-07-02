@@ -1,0 +1,87 @@
+{# ** SECTION FORM STRIPE **#}     
+<div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center">
+                    <h4>Procéder au paiement</h4>
+                </div>
+            </div>
+            <!--   Form Section   -->
+            <div class="card">
+                <div class="card-content">
+                    <div class="row">
+                        <h5 class="center">Veuillez remplir tous les champs</h5>
+                        <form method="POST" action="">
+                            <div class="input-field col s12 l6">
+                                <label for="name">Entrez le nom présent sur la carte: </label>
+                                <input type="text" name="name" id="name" required>
+                            </div>
+                            <div class="input-field col s12 l6">
+                                <label for="prix">{{ (payment.amount / 100) ~ 0 }} €</label>
+                                <input type="text" name="prix" id="name" disabled="disabled">
+                            </div>
+                            <div class="clearfix"></div>
+                            <h5 class="center">Payez en toute sécurité avec Stripe</h5>
+                            <img style="width:13rem" src="{{ asset('assets/images/paiement-securise-stripe.jpeg') }}">
+                            <div class="input-field col s12">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" required>
+                            </div>
+                            {# INPUT CACHE PRIX #}
+                            {# <input type="number" name="prixTotal"> #}
+                            <div class="input-field col s12">
+                                {# CARD STRIPE #}
+                                <div id="card-element"></div>
+                            </div>
+                            <div class="input-field col s12 l6">
+                                <a href="{{ path ('landing_page') }}" class="btn btn-large waves-effect waves-light grey col s12">Annuler</a>
+                            </div>
+                            <div class="input-field col s12 l6">
+                                <button class="btn btn-large waves-effect waves-light blue lighten-1 col s12" type="submit" name="action">
+                                    Payer
+                                    <i class="material-icons right">euro_symbol</i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% block javascripts %}
+
+    {#__STRIPE___#}
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        var stripe = Stripe("pk_test_51ItUwWJ2Hjjjp4Hdngi4z5Ymovnnn92z4xrHYXK17BSE7YfMzXcidAwlEXeX024WH9r47TtRYUHpgVUb2ouVoxKY00tjP77aph");
+
+        var elements = stripe.elements();
+
+        var style = {
+            base: {
+                color: "#32325d",
+                fontFamily: 'Arial, sans-serif',
+                fontSmoothing: "antialiased",
+                fontSize: "16px",
+                "::placeholder": {
+                    color: "#32325d"
+                }
+            },
+            invalid: {
+                fontFamily: 'Arial, sans-serif',
+                color: "#fa755a",
+                iconColor: "#fa755a"
+            }
+        };
+
+        var card = elements.create("card", { style: style });
+        // Stripe injects an iframe into the DOM
+        card.mount("#card-element");
+    </script>
+
+    {% endblock %}

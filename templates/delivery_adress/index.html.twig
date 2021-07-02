@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DeliveryAdress index{% endblock %}
+
+{% block body %}
+    <h1>DeliveryAdress index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Firstname</th>
+                <th>Adress</th>
+                <th>Complement_adress</th>
+                <th>City</th>
+                <th>Cp</th>
+                <th>Country</th>
+                <th>Tel</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for delivery_adress in delivery_adresses %}
+            <tr>
+                <td>{{ delivery_adress.id }}</td>
+                <td>{{ delivery_adress.name }}</td>
+                <td>{{ delivery_adress.firstname }}</td>
+                <td>{{ delivery_adress.adress }}</td>
+                <td>{{ delivery_adress.complementAdress }}</td>
+                <td>{{ delivery_adress.city }}</td>
+                <td>{{ delivery_adress.cp }}</td>
+                <td>{{ delivery_adress.country }}</td>
+                <td>{{ delivery_adress.tel }}</td>
+                <td>
+                    <a href="{{ path('delivery_adress_show', {'id': delivery_adress.id}) }}">show</a>
+                    <a href="{{ path('delivery_adress_edit', {'id': delivery_adress.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('delivery_adress_new') }}">Create new</a>
+{% endblock %}
